@@ -161,6 +161,30 @@ body.fullscreen-enabled #fullscreenToggle {
   width: 50px;
   height: 50px;
 }
+/* Style the VR icon button */
+#vrIcon {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  width: 50px;  /* Adjust size as needed */
+  height: 50px;
+  background-color: rgba(0, 0, 0, 0.5);
+  border-radius: 50%;
+  border: none;
+  cursor: pointer;
+  padding: 10px;
+  z-index: 100;
+}
+
+#vrIcon img {
+  width: 100%;
+  height: 100%;
+}
+
+/* Optional hover effect for the VR icon */
+#vrIcon:hover {
+  background-color: rgba(0, 0, 0, 0.8);
+}
 
 /* If there is a fullscreen button, autorotate must placed a bit to the left */
 body.fullscreen-enabled #autorotateToggle {

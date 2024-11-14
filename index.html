@@ -7,10 +7,16 @@
 <style> @-ms-viewport { width: device-width; } </style>
 <link rel="stylesheet" href="vendor/reset.min.css">
 <link rel="stylesheet" href="style.css">
+<script src="https://cdn.jsdelivr.net/npm/webxr-polyfill@latest/dist/webxr-polyfill.js"></script>
+
 </head>
 <body class="multiple-scenes ">
 
 <div id="pano"></div>
+<!-- VR Icon button to enable VR mode -->
+<button id="vrIcon" style="display: none;">
+  <img src="path_to_your_vr_icon.png" alt="Enter VR" />
+</button>
 
 <div id="sceneList">
   <ul class="scenes">

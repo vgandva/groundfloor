@@ -156,6 +156,66 @@
       }
     });
   });
+'use strict';
+
+(function() {
+  var Marzipano = window.Marzipano;
+  var viewerOpts = {
+    controls: {
+      mouseViewMode: 'drag'  // Use 'drag' or 'click-and-drag' for desktop users
+    }
+  };
+
+  // Initialize the Marzipano Viewer
+  var panoElement = document.querySelector('#pano');
+  var viewer = new Marzipano.Viewer(panoElement, viewerOpts);
+
+  // Assuming you've already set up your scenes (you'll need to have data for scenes)
+  var scenes = data.scenes.map(function(data) {
+    var urlPrefix = "tiles"; // Path to your image tiles
+    var source = Marzipano.ImageUrlSource.fromString(
+      urlPrefix + "/" + data.id + "/{z}/{f}/{y}/{x}.jpg",
+      { cubeMapPreviewUrl: urlPrefix + "/" + data.id + "/preview.jpg" });
+
+    var geometry = new Marzipano.CubeGeometry(data.levels);
+    var view = new Marzipano.RectilinearView(data.initialViewParameters);
+
+    return viewer.createScene({
+      source: source,
+      geometry: geometry,
+      view: view
+    });
+  });
+
+  // WebXR Integration: Function to check if WebXR (VR) is supported
+  function checkVRSupport() {
+    if (navigator.xr) {
+      // VR is supported
+      document.getElementById('vrButton').style.display = 'block';  // Show VR button
+    } else {
+      console.log("WebVR/WebXR not supported");
+    }
+  }
+
+  // Add Event Listener to the VR button to enter VR mode
+  document.getElementById('vrButton').addEventListener('click', function() {
+    if (navigator.xr) {
+      navigator.xr.requestDevice().then(function(device) {
+        device.requestSession({ immersive: true }).then(function(session) {
+          viewer.enterVR();  // Marzipano's method to enter VR
+        }).catch(function(error) {
+          console.error("Failed to start VR session: ", error);
+        });
+      });
+    } else {
+      console.log("WebVR/WebXR is not supported on this device");
+    }
+  });
+
+  // Call checkVRSupport to determine if the VR button should be shown
+  checkVRSupport();
+
+})();
 
   // DOM elements for view controls.
   var viewUpElement = document.querySelector('#viewUp');
